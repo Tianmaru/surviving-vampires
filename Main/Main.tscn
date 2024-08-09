@@ -1,0 +1,345 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://light.png" type="Texture" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/healthbar.png" type="Texture" id=3]
+[ext_resource path="res://Main/Main.gd" type="Script" id=4]
+[ext_resource path="res://Main/bg.png" type="Texture" id=5]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_base_offset = Vector2( -160, -90 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 320, 180 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color( 0.5, 0.5, 0.5, 1 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Sprite2" type="Sprite" parent="Player"]
+visible = false
+z_index = -10
+texture = ExtResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+
+[node name="Light2D" type="Light2D" parent="Player"]
+texture = ExtResource( 1 )
+energy = 1.5
+range_layer_min = -100
+shadow_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="XPBar" type="TextureProgress" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+max_value = 1.0
+value = 1.0
+texture_progress = ExtResource( 3 )
+tint_progress = Color( 1, 0, 0, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+anchor_right = 1.0
+margin_bottom = 14.0
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelUpMenu" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/LevelUpMenu"]
+pause_mode = 2
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 10.0
+margin_top = -60.0
+margin_right = -10.0
+margin_bottom = 64.0
+color = Color( 1, 1, 1, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/LevelUpMenu/Background"]
+anchor_right = 1.0
+margin_top = 8.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Level up!"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Upgrades" type="VBoxContainer" parent="CanvasLayer/LevelUpMenu/Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 22.0
+margin_right = -16.0
+margin_bottom = -16.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FangsButton" type="Button" parent="CanvasLayer/LevelUpMenu/Background/Upgrades"]
+margin_top = 9.0
+margin_right = 268.0
+margin_bottom = 29.0
+text = "Fangs"
+
+[node name="BatsButton" type="Button" parent="CanvasLayer/LevelUpMenu/Background/Upgrades"]
+margin_top = 33.0
+margin_right = 268.0
+margin_bottom = 53.0
+text = "Bats"
+
+[node name="CoffinsButton" type="Button" parent="CanvasLayer/LevelUpMenu/Background/Upgrades"]
+margin_top = 57.0
+margin_right = 268.0
+margin_bottom = 77.0
+text = "Coffin"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer/LevelUpMenu"]
+position = Vector2( 160, 0 )
+amount = 256
+lifetime = 2.0
+emission_shape = 2
+emission_rect_extents = Vector2( 160, 1 )
+scale_amount = 5.0
+scale_amount_random = 1.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="GameOver" type="Control" parent="CanvasLayer2"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/GameOver"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -146.0
+margin_top = -90.0
+margin_right = 146.0
+margin_bottom = 90.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer2/GameOver/VBoxContainer"]
+margin_top = 53.0
+margin_right = 292.0
+margin_bottom = 67.0
+text = "Game Over"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer2/GameOver/VBoxContainer"]
+margin_top = 71.0
+margin_right = 292.0
+margin_bottom = 102.0
+text = "At last, your bloodsucking days are over.
+As the sun rises, your body crumbles to dust."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CanvasLayer2/GameOver/VBoxContainer"]
+margin_top = 106.0
+margin_right = 292.0
+margin_bottom = 126.0
+text = "Try Again"
+
+[node name="YouWin" type="Control" parent="CanvasLayer2"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/YouWin"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/YouWin"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -146.0
+margin_top = -90.0
+margin_right = 146.0
+margin_bottom = 90.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer2/YouWin/VBoxContainer"]
+margin_top = 24.0
+margin_right = 292.0
+margin_bottom = 41.0
+text = "You Win!"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer2/YouWin/VBoxContainer"]
+margin_top = 45.0
+margin_right = 292.0
+margin_bottom = 102.0
+text = "Now you can go back to your coffin and sleep for another eternity...
+Until the living walk among the dead again!"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeepPlayingBtn" type="Button" parent="CanvasLayer2/YouWin/VBoxContainer"]
+margin_top = 106.0
+margin_right = 292.0
+margin_bottom = 129.0
+text = "Keep Playing"
+
+[node name="Button" type="Button" parent="CanvasLayer2/YouWin/VBoxContainer"]
+margin_top = 133.0
+margin_right = 292.0
+margin_bottom = 156.0
+text = "Restart"
+
+[node name="Events" type="Node2D" parent="."]
+
+[node name="Timer1" type="Timer" parent="Events"]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="Timer2" type="Timer" parent="Events"]
+wait_time = 120.0
+one_shot = true
+autostart = true
+
+[node name="Timer3" type="Timer" parent="Events"]
+wait_time = 180.0
+one_shot = true
+autostart = true
+
+[node name="Timer4" type="Timer" parent="Events"]
+wait_time = 240.0
+one_shot = true
+autostart = true
+
+[node name="Timer5" type="Timer" parent="Events"]
+wait_time = 300.0
+one_shot = true
+autostart = true
+
+[node name="Timer6" type="Timer" parent="Events"]
+wait_time = 360.0
+one_shot = true
+autostart = true
+
+[node name="Timer7" type="Timer" parent="Events"]
+wait_time = 420.0
+one_shot = true
+autostart = true
+
+[node name="Timer8" type="Timer" parent="Events"]
+wait_time = 480.0
+one_shot = true
+autostart = true
+
+[node name="Timer9" type="Timer" parent="Events"]
+wait_time = 540.0
+one_shot = true
+autostart = true
+
+[node name="Timer10" type="Timer" parent="Events"]
+wait_time = 600.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="defeated" from="Player" to="." method="_on_Player_defeated"]
+[connection signal="level_up" from="Player" to="." method="_on_Player_level_up"]
+[connection signal="xp_gained" from="Player" to="." method="_on_Player_xp_gained"]
+[connection signal="button_down" from="CanvasLayer/LevelUpMenu/Background/Upgrades/FangsButton" to="." method="_on_FangsButton_button_down"]
+[connection signal="button_down" from="CanvasLayer/LevelUpMenu/Background/Upgrades/BatsButton" to="." method="_on_BatsButton_button_down"]
+[connection signal="button_down" from="CanvasLayer/LevelUpMenu/Background/Upgrades/CoffinsButton" to="." method="_on_CoffinsButton_button_down"]
+[connection signal="button_down" from="CanvasLayer2/GameOver/VBoxContainer/Button" to="." method="_on_Button_button_down"]
+[connection signal="button_down" from="CanvasLayer2/YouWin/VBoxContainer/KeepPlayingBtn" to="." method="_on_KeepPlayingBtn_button_down"]
+[connection signal="button_down" from="CanvasLayer2/YouWin/VBoxContainer/Button" to="." method="_on_Button_button_down"]
+[connection signal="timeout" from="Events/Timer1" to="." method="_on_Timer1_timeout"]
+[connection signal="timeout" from="Events/Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="timeout" from="Events/Timer3" to="." method="_on_Timer3_timeout"]
+[connection signal="timeout" from="Events/Timer4" to="." method="_on_Timer4_timeout"]
+[connection signal="timeout" from="Events/Timer5" to="." method="_on_Timer5_timeout"]
+[connection signal="timeout" from="Events/Timer6" to="." method="_on_Timer6_timeout"]
+[connection signal="timeout" from="Events/Timer7" to="." method="_on_Timer7_timeout"]
+[connection signal="timeout" from="Events/Timer8" to="." method="_on_Timer8_timeout"]
+[connection signal="timeout" from="Events/Timer9" to="." method="_on_Timer9_timeout"]
+[connection signal="timeout" from="Events/Timer10" to="." method="_on_Timer10_timeout"]

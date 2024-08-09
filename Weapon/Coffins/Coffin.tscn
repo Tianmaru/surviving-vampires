@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Weapon/Coffins/Coffin.gd" type="Script" id=1]
+[ext_resource path="res://Weapon/Coffins/coffin.png" type="Texture" id=2]
+[ext_resource path="res://Weapon/Coffins/shadow.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="Coffin" type="Area2D"]
+collision_layer = 0
+collision_mask = 2147483652
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="ShadowSprite" type="Sprite" parent="."]
+z_index = -1
+texture = ExtResource( 3 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 32.0
+linear_accel = -16.0
+linear_accel_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
